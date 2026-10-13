@@ -1,0 +1,22 @@
+{
+  "name": "doctors-cares",
+  "version": "1.0.0",
+  "description": "Doctors Cares - Full-Stack Healthcare Web Application (MERN)",
+  "scripts": {
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "seed": "npm run seed --prefix server",
+    "build:client": "npm run build --prefix client"
+  },
+  "keywords": [
+    "mern",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "healthcare",
+    "doctor-appointment"
+  ],
+  "author": "Doctors Cares Engineering Team",
+  "license": "MIT"
+}
