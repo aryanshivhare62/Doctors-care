@@ -57,14 +57,13 @@ departmentSchema.virtual('doctors', {
 });
 
 // Auto-generate slug before saving
-departmentSchema.pre('save', function (next) {
+departmentSchema.pre('save', async function () {
   if (this.isModified('name')) {
     this.slug = this.name
       .toLowerCase()
       .replace(/[^\w\s-]/g, '')
       .replace(/\s+/g, '-');
   }
-  next();
 });
 
 const Department = mongoose.model('Department', departmentSchema);
