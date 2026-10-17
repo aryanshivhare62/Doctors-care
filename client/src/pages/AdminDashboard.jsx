@@ -36,6 +36,7 @@ const AdminDashboard = () => {
   const [messages, setMessages] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const [openMenuId, setOpenMenuId] = useState(true);
   const [alertError, setAlertError] = useState(null);
   const [alertSuccess, setAlertSuccess] = useState(null);
 
@@ -127,7 +128,7 @@ const AdminDashboard = () => {
     try {
       await doctorService.deleteDoctor(id);
       setAlertSuccess('Doctor deleted');
-      setDoctors((prev) => prev.filter((doc) => doc._id !== id));
+      fetchAdminData();
       setOpenMenuId(null);
     } catch (err) {
       alert('Could not delete doctor');
