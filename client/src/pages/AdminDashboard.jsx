@@ -121,6 +121,19 @@ const AdminDashboard = () => {
     }
   };
 
+  // Delete Doctor
+  const handleDeleteDoctor = async (id) => {
+    if (!window.confirm('Delete this doctor?')) return;
+    try {
+      await doctorService.deleteDoctor(id);
+      setAlertSuccess('Doctor deleted');
+      setDoctors((prev) => prev.filter((doc) => doc._id !== id));
+      setOpenMenuId(null);
+    } catch (err) {
+      alert('Could not delete doctor');
+    }
+  };
+
   // Create Doctor submit
   const handleCreateDoctorSubmit = async (e) => {
     e.preventDefault();
@@ -426,13 +439,19 @@ const AdminDashboard = () => {
 
             <div className="grid-3">
               {doctors.map((doc) => (
-                <div key={doc._id} className="card" style={{ padding: '1.25rem' }}>
+                <div key={doc._id} className="card" style={{ padding: '1.25rem', position: 'relative' }}>
+                  <button onClick={() => setOpenMenuId(openMenuId === doc._id ? null : doc._id)}
+                    style={{ position: 'absolute', top: '10px', right: '10px', border: 'none', background: 'transparent', fontSize: '24px', cursor: 'pointer' }}>
+                    ⋮
+                  </button>
+                  {openMenuId === doc._id && (
+                    <button onClick={() => handleDeleteDoctor(doc._id)}
+                      style={{ position: 'absolute', top: '40px', right: '10px', background: 'white', color: 'red', border: '1px solid #ddd', padding: '8px 14px', cursor: 'pointer', zIndex: 10 }}>
+                      Delete
+                    </button>
+                  )}
                   <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
-                    <img
-                      src={doc.avatar}
-                      alt={doc.name}
-                      style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover' }}
-                    />
+                    <img src={doc.avatar} alt={doc.name} style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover' }} />
                     <div>
                       <h4 style={{ fontSize: '1.05rem', margin: 0 }}>{doc.name}</h4>
                       <div style={{ fontSize: '0.8rem', color: 'var(--color-primary)' }}>{doc.specialty}</div>
